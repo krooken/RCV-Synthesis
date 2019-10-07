@@ -52,10 +52,10 @@ sys_init = {
 }
 
 sys_safe = {
-    "upp_2_request->!upp_2_request'",
-    '''(upp_2_response="success") -> upp_2_available' ''',
-    '''(upp_2_response!="success") -> (upp_2_available'<->upp_2_available) ''',
-    '''active_path="upp2" -> (upp_2_available | upp_2_response="success")''',
+    "upp_2_request -> !upp_2_request'",
+    '''(upp_2_response = "success") -> upp_2_available' ''',
+    '''(upp_2_response != "success") -> (upp_2_available' <-> upp_2_available) ''',
+    '''active_path = "upp2" -> (upp_2_available | upp_2_response = "success")''',
 }
 
 sys_prog = {
