@@ -14,11 +14,13 @@ import pickle
 env_vars = {
     'goal': 'boolean',
     'upp_2_response': ['none', 'success'],
+    'driving': 'boolean',
 }
 
 env_init = {
     '!goal',
     'upp_2_response = "none"',
+    '!driving',
 }
 
 env_safe = {
@@ -26,10 +28,12 @@ env_safe = {
     '''upp_2_request->((upp_2_response' = "success"))''',
     '''(!driving & !goal) -> !goal' ''',
     '''(!driving & goal) -> goal' ''',
+    '''driving' -> active_path != "none"''',
+    '''goal -> !driving''',
 }
 
 env_prog = {
-    '!driving | goal'
+    'active_path != "upp2" | goal',
 }
 
 
@@ -38,24 +42,20 @@ env_prog = {
 sys_vars = {
     'upp_2_request': 'boolean',
     'active_path': ['none', 'upp2'],
-    'driving': 'boolean',
     'upp_2_available': 'boolean',
 }
 
 sys_init = {
     '!upp_2_request',
     'active_path = "none"',
-    '!driving',
     '!upp_2_available',
 }
 
 sys_safe = {
     "upp_2_request->!upp_2_request'",
-    'driving -> active_path != "none"',
     '''(upp_2_response="success") -> upp_2_available' ''',
     '''(upp_2_response!="success") -> (upp_2_available'<->upp_2_available) ''',
     '''active_path="upp2" -> (upp_2_available | upp_2_response="success")''',
-    '''active_path="none" -> !driving''',
 }
 
 sys_prog = {
