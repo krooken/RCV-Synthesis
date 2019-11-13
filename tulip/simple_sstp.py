@@ -58,7 +58,8 @@ sys_safe = {
     '''active_path="sstp" -> sstp_available > 0''',
     '''safe_stopped -> (sensor_failure)''',
     '''safe_stopped -> !goal''',
-    '''(active_path = "upp2") -> active_path' != "none" '''
+    '''(active_path = "upp2" & driving') -> active_path' != "none" ''',
+    '''goal -> active_path="none"''',
 }
 
 sys_prog = {
