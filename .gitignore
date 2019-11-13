@@ -1,3 +1,7 @@
+*.whl
+*.pickle
+*.ipynb
+
 
 # Created by https://www.gitignore.io/api/latex,python,matlab,images,jupyternotebooks
 # Edit at https://www.gitignore.io/?templates=latex,python,matlab,images,jupyternotebooks
