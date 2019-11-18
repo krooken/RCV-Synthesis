@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Module xmlns="http://waters.sourceforge.net/xsd/module" xmlns:B="http://waters.sourceforge.net/xsd/base" Name="simple_upp2">
+<EventDeclList>
+<EventDecl Kind="UNCONTROLLABLE" Name="goal_reached"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="upp_2_success"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="starting"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="stopping"/>
+<EventDecl Kind="CONTROLLABLE" Name="upp_2_request"/>
+<EventDecl Kind="CONTROLLABLE" Name="activate_path_none"/>
+<EventDecl Kind="CONTROLLABLE" Name="activate_path_upp2"/>
+<EventDecl Kind="PROPOSITION" Name=":accepting"/>
+</EventDeclList>
+<ComponentList>
+<SimpleComponent Kind="PLANT" Name="upp2_function">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="NoRequest">
+<PointGeometry>
+<Point X="160" Y="272"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="Responding">
+<PointGeometry>
+<Point X="256" Y="272"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="Upp2Available">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="368" Y="272"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="NoRequest" Target="Responding">
+<LabelBlock>
+<SimpleIdentifier Name="upp_2_request"/>
+<LabelGeometry Anchor="NW">
+<Point X="-46" Y="-32"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="Responding" Target="Upp2Available">
+<LabelBlock>
+<SimpleIdentifier Name="upp_2_success"/>
+<LabelGeometry Anchor="NW">
+<Point X="-46" Y="-29"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="SPEC" Name="request_path">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="GoodRequestPath">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="160" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="-65" Y="11"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="BadRequestPath">
+<PointGeometry>
+<Point X="336" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="GoodRequestPath" Target="BadRequestPath">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-46" Y="9"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="!=" Text="upp2_function != Upp2Available">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Available"/>
+</BinaryExpression>
+</Guards>
+<LabelGeometry Anchor="NW">
+<Point X="-63" Y="28"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="GoodRequestPath" Target="GoodRequestPath">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-37" Y="-34"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="==" Text="upp2_function == Upp2Available">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Available"/>
+</BinaryExpression>
+</Guards>
+<LabelGeometry Anchor="NW">
+<Point X="-56" Y="-52"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="SPEC" Name="keep_path">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="GoodKeepPath">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="144" Y="288"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="BadKeepPath">
+<PointGeometry>
+<Point X="352" Y="288"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="ReachedGoalWithPath">
+<PointGeometry>
+<Point X="352" Y="384"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="ReachedGoalNone">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="208" Y="384"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="-89" Y="13"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="GoodKeepPath" Target="BadKeepPath">
+<LabelBlock>
+<SimpleIdentifier Name="starting"/>
+<LabelGeometry Anchor="NW">
+<Point X="-21" Y="-24"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="248" Y="272"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="BadKeepPath" Target="GoodKeepPath">
+<LabelBlock>
+<SimpleIdentifier Name="stopping"/>
+<LabelGeometry Anchor="NW">
+<Point X="-22" Y="9"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="248" Y="304"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="GoodKeepPath" Target="GoodKeepPath">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_none"/>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-55" Y="-47"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="164" Y="235"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="BadKeepPath" Target="BadKeepPath">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-42" Y="-34"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="BadKeepPath" Target="ReachedGoalWithPath">
+<LabelBlock>
+<SimpleIdentifier Name="goal_reached"/>
+<LabelGeometry Anchor="NW">
+<Point X="2" Y="-2"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="ReachedGoalWithPath" Target="ReachedGoalNone">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_none"/>
+<LabelGeometry Anchor="NW">
+<Point X="-47" Y="9"/>
+</LabelGeometry>
+</LabelBlock>
+<EndPointGeometry>
+<Point X="208" Y="384"/>
+</EndPointGeometry>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="paths">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="Stopped">
+<PointGeometry>
+<Point X="112" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="Driving">
+<PointGeometry>
+<Point X="224" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="Goal">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="352" Y="256"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="Stopped" Target="Driving">
+<LabelBlock>
+<SimpleIdentifier Name="starting"/>
+<LabelGeometry Anchor="NW">
+<Point X="-24" Y="-25"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="168" Y="240"/>
+</SplineGeometry>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="!=" Text="active_path != none">
+<SimpleIdentifier Name="active_path"/>
+<SimpleIdentifier Name="none"/>
+</BinaryExpression>
+</Guards>
+<LabelGeometry Anchor="NW">
+<Point X="-52" Y="-41"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+<Edge Source="Driving" Target="Goal">
+<LabelBlock>
+<SimpleIdentifier Name="goal_reached"/>
+<LabelGeometry Anchor="NW">
+<Point X="-35" Y="-24"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="Driving" Target="Stopped">
+<LabelBlock>
+<SimpleIdentifier Name="stopping"/>
+<LabelGeometry Anchor="NW">
+<Point X="-21" Y="11"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="168" Y="272"/>
+</SplineGeometry>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="active_path">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="none">
+<PointGeometry>
+<Point X="128" Y="224"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="upp2">
+<PointGeometry>
+<Point X="288" Y="224"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="none" Target="upp2">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-28" Y="-29"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="208" Y="208"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="upp2" Target="none">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_none"/>
+<LabelGeometry Anchor="NW">
+<Point X="-44" Y="15"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="208" Y="240"/>
+</SplineGeometry>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+</ComponentList>
+</Module>
