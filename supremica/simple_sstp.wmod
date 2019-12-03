@@ -175,6 +175,54 @@
 </EdgeList>
 </Graph>
 </SimpleComponent>
+<SimpleComponent Kind="SPEC" Name="reach_stop">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="S0">
+<PointGeometry>
+<Point X="160" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="S1">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="336" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="S2">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="160" Y="368"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="S0" Target="S1">
+<LabelBlock>
+<SimpleIdentifier Name="goal_reached"/>
+</LabelBlock>
+</Edge>
+<Edge Source="S0" Target="S2">
+<LabelBlock>
+<SimpleIdentifier Name="safe_stopping"/>
+</LabelBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
 <SimpleComponent Kind="SPEC" Name="keep_path">
 <Graph>
 <NodeList>
@@ -213,10 +261,8 @@
 <Edge Source="BadKeepPath" Target="GoodKeepPath">
 <LabelBlock>
 <SimpleIdentifier Name="stopping"/>
-<SimpleIdentifier Name="goal_reached"/>
-<SimpleIdentifier Name="safe_stopping"/>
 <LabelGeometry Anchor="NW">
-<Point X="-22" Y="9"/>
+<Point X="-22" Y="8"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
@@ -226,7 +272,6 @@
 <Edge Source="GoodKeepPath" Target="GoodKeepPath">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="safe_stopping"/>
 <LabelGeometry Anchor="NW">
 <Point X="-55" Y="-61"/>
 </LabelGeometry>
@@ -337,7 +382,7 @@
 </EdgeList>
 </Graph>
 </SimpleComponent>
-<SimpleComponent Kind="SPEC" Name="safe_stop">
+<SimpleComponent Kind="SPEC" Name="safe_stop_req">
 <Graph>
 <NodeList>
 <SimpleNode Initial="true" Name="S0">
@@ -464,12 +509,107 @@
 </EdgeList>
 </Graph>
 </SimpleComponent>
-<SimpleComponent Kind="PLANT" Name="paths">
+<SimpleComponent Kind="PLANT" Name="goal">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="NotGoal">
+<PointGeometry>
+<Point X="224" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="AtGoal">
+<PointGeometry>
+<Point X="384" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="NotGoal" Target="AtGoal">
+<LabelBlock>
+<SimpleIdentifier Name="goal_reached"/>
+<LabelGeometry Anchor="NW">
+<Point X="-45" Y="-66"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="&amp;" Text="state == Driving &amp; active_path == upp2">
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="state"/>
+<SimpleIdentifier Name="Driving"/>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="active_path"/>
+<SimpleIdentifier Name="upp2"/>
+</BinaryExpression>
+</BinaryExpression>
+</Guards>
+<LabelGeometry Anchor="NW">
+<Point X="-88" Y="-45"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="safe_stop">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="NotSafe">
+<PointGeometry>
+<Point X="224" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="SafeStopped">
+<PointGeometry>
+<Point X="384" Y="208"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="NotSafe" Target="SafeStopped">
+<LabelBlock>
+<SimpleIdentifier Name="safe_stopping"/>
+<LabelGeometry Anchor="NW">
+<Point X="-45" Y="-66"/>
+</LabelGeometry>
+</LabelBlock>
+<GuardActionBlock>
+<Guards>
+<BinaryExpression Operator="==" Text="active_path == sstp">
+<SimpleIdentifier Name="active_path"/>
+<SimpleIdentifier Name="sstp"/>
+</BinaryExpression>
+</Guards>
+<LabelGeometry Anchor="NW">
+<Point X="-88" Y="-45"/>
+</LabelGeometry>
+</GuardActionBlock>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="PLANT" Name="state">
 <Graph>
 <NodeList>
 <SimpleNode Initial="true" Name="Stopped">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
 <PointGeometry>
-<Point X="112" Y="256"/>
+<Point X="176" Y="176"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -477,29 +617,7 @@
 </SimpleNode>
 <SimpleNode Name="Driving">
 <PointGeometry>
-<Point X="224" Y="256"/>
-</PointGeometry>
-<LabelGeometry Anchor="NW">
-<Point X="0" Y="10"/>
-</LabelGeometry>
-</SimpleNode>
-<SimpleNode Name="Goal">
-<EventList>
-<SimpleIdentifier Name=":accepting"/>
-</EventList>
-<PointGeometry>
-<Point X="352" Y="256"/>
-</PointGeometry>
-<LabelGeometry Anchor="NW">
-<Point X="0" Y="10"/>
-</LabelGeometry>
-</SimpleNode>
-<SimpleNode Name="SafeStopped">
-<EventList>
-<SimpleIdentifier Name=":accepting"/>
-</EventList>
-<PointGeometry>
-<Point X="160" Y="384"/>
+<Point X="352" Y="176"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -511,40 +629,33 @@
 <LabelBlock>
 <SimpleIdentifier Name="starting"/>
 <LabelGeometry Anchor="NW">
-<Point X="-24" Y="-25"/>
+<Point X="-25" Y="-59"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="168" Y="240"/>
+<Point X="264" Y="160"/>
 </SplineGeometry>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="!=" Text="active_path != none">
+<BinaryExpression Operator="&amp;" Text="active_path != none &amp; goal != AtGoal &amp; safe_stop != SafeStopped">
+<BinaryExpression Operator="&amp;">
+<BinaryExpression Operator="!=">
 <SimpleIdentifier Name="active_path"/>
 <SimpleIdentifier Name="none"/>
 </BinaryExpression>
-</Guards>
-<LabelGeometry Anchor="NW">
-<Point X="-52" Y="-41"/>
-</LabelGeometry>
-</GuardActionBlock>
-</Edge>
-<Edge Source="Driving" Target="Goal">
-<LabelBlock>
-<SimpleIdentifier Name="goal_reached"/>
-<LabelGeometry Anchor="NW">
-<Point X="-35" Y="-24"/>
-</LabelGeometry>
-</LabelBlock>
-<GuardActionBlock>
-<Guards>
-<BinaryExpression Operator="==" Text="active_path == upp2">
-<SimpleIdentifier Name="active_path"/>
-<SimpleIdentifier Name="upp2"/>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="goal"/>
+<SimpleIdentifier Name="AtGoal"/>
+</BinaryExpression>
+</BinaryExpression>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="safe_stop"/>
+<SimpleIdentifier Name="SafeStopped"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
-<Point X="-45" Y="-42"/>
+<Point X="-59" Y="-42"/>
 </LabelGeometry>
 </GuardActionBlock>
 </Edge>
@@ -552,60 +663,12 @@
 <LabelBlock>
 <SimpleIdentifier Name="stopping"/>
 <LabelGeometry Anchor="NW">
-<Point X="-21" Y="11"/>
+<Point X="-23" Y="20"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="168" Y="272"/>
+<Point X="264" Y="192"/>
 </SplineGeometry>
-</Edge>
-<Edge Source="Driving" Target="SafeStopped">
-<LabelBlock>
-<SimpleIdentifier Name="safe_stopping"/>
-<LabelGeometry Anchor="NW">
-<Point X="6" Y="-6"/>
-</LabelGeometry>
-</LabelBlock>
-<GuardActionBlock>
-<Guards>
-<BinaryExpression Operator="==" Text="active_path == sstp">
-<SimpleIdentifier Name="active_path"/>
-<SimpleIdentifier Name="sstp"/>
-</BinaryExpression>
-</Guards>
-<LabelGeometry Anchor="NW">
-<Point X="0" Y="20"/>
-</LabelGeometry>
-</GuardActionBlock>
-</Edge>
-<Edge Source="Stopped" Target="SafeStopped">
-<LabelBlock>
-<SimpleIdentifier Name="safe_stopping"/>
-<LabelGeometry Anchor="NW">
-<Point X="-95" Y="-8"/>
-</LabelGeometry>
-</LabelBlock>
-<GuardActionBlock>
-<Guards>
-<BinaryExpression Operator="==" Text="active_path == sstp">
-<SimpleIdentifier Name="active_path"/>
-<SimpleIdentifier Name="sstp"/>
-</BinaryExpression>
-</Guards>
-<LabelGeometry Anchor="NW">
-<Point X="-115" Y="12"/>
-</LabelGeometry>
-</GuardActionBlock>
-</Edge>
-<Edge Source="Stopped" Target="Stopped">
-<LabelBlock>
-<SimpleIdentifier Name="upp_2_request"/>
-</LabelBlock>
-</Edge>
-<Edge Source="Driving" Target="Driving">
-<LabelBlock>
-<SimpleIdentifier Name="upp_2_request"/>
-</LabelBlock>
 </Edge>
 </EdgeList>
 </Graph>
