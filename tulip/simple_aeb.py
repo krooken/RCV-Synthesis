@@ -16,6 +16,7 @@ env_vars = {
     'emergency_stopped': 'boolean',
     'sensor_failure': 'boolean',
     'driving': 'boolean',
+    'upp_2_response': ['none', 'success'],
     'sstp_available': (0,1),
 }
 
@@ -25,11 +26,15 @@ env_init = {
     '!emergency_stopped',
     '!sensor_failure',
     '!driving',
+    'upp_2_response = "none"',
     'sstp_available = 1',
 }
 
 env_safe = {
     "sensor_failure -> sensor_failure'",
+    '''!upp_2_request -> (upp_2_response' = "none")''',
+    '''upp_2_request -> 
+        ((upp_2_response' = "success"))''',
     ''' active_path = "sstp" -> sstp_available' > 0 ''',
     '''(!(driving & active_path="upp2") & !goal) -> !goal' ''',
     '''(!driving & goal) -> goal' ''',
@@ -54,15 +59,21 @@ env_prog = {
 #%%
 
 sys_vars = {
+    'upp_2_request': 'boolean',
     'active_path': ['none', 'upp2', 'sstp', 'aeb'],
+    'upp_2_available': 'boolean',
 }
 
 sys_init = {
+    '!upp_2_request',
     'active_path = "none"',
+    '!upp_2_available',
 }
 
 sys_safe = {
     '''active_path="sstp" -> sstp_available > 0''',
+    '''(upp_2_response = "success") -> upp_2_available' ''',
+    '''(upp_2_response != "success") -> (upp_2_available' <-> upp_2_available) ''',
     '''safe_stopped -> (sensor_failure)''',
     '''safe_stopped -> !goal''',
     '''emergency_stopped -> (sensor_failure)''',
