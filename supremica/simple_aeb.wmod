@@ -1076,9 +1076,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="==" Text="active_path == sstp">
+<BinaryExpression Operator="&amp;" Text="active_path == sstp &amp; sstp_function != SstpUnavailable">
+<BinaryExpression Operator="==">
 <SimpleIdentifier Name="active_path"/>
 <SimpleIdentifier Name="sstp"/>
+</BinaryExpression>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="sstp_function"/>
+<SimpleIdentifier Name="SstpUnavailable"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
