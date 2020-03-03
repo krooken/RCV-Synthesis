@@ -16,6 +16,7 @@
 <EventDecl Kind="UNCONTROLLABLE" Name="sstp_available"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="sstp_unavailable"/>
 <EventDecl Kind="CONTROLLABLE" Name="activate_path_aeb"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="upp_2_fail"/>
 </EventDeclList>
 <ComponentList>
 <SimpleComponent Kind="PLANT" Name="upp2_function">
@@ -46,6 +47,17 @@
 </EventList>
 <PointGeometry>
 <Point X="368" Y="272"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="Upp2Failed">
+<EventList>
+<SimpleIdentifier Name=":accepting"/>
+</EventList>
+<PointGeometry>
+<Point X="368" Y="352"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -107,6 +119,33 @@
 <SimpleIdentifier Name="stopping"/>
 <LabelGeometry Anchor="NW">
 <Point X="26" Y="-137"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="Responding" Target="Upp2Failed">
+<LabelBlock>
+<SimpleIdentifier Name="upp_2_fail"/>
+<LabelGeometry Anchor="NW">
+<Point X="-45" Y="13"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="Upp2Failed" Target="Upp2Failed">
+<LabelBlock>
+<SimpleIdentifier Name="activate_path_aeb"/>
+<SimpleIdentifier Name="activate_path_none"/>
+<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="emergency_stopping"/>
+<SimpleIdentifier Name="goal_reached"/>
+<SimpleIdentifier Name="safe_stopping"/>
+<SimpleIdentifier Name="sensor_failed"/>
+<SimpleIdentifier Name="sstp_available"/>
+<SimpleIdentifier Name="sstp_unavailable"/>
+<SimpleIdentifier Name="starting"/>
+<SimpleIdentifier Name="stopping"/>
+<LabelGeometry Anchor="NW">
+<Point X="26" Y="12"/>
 </LabelGeometry>
 </LabelBlock>
 </Edge>
@@ -510,9 +549,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="==" Text="sensor_failure == NoFailure">
+<BinaryExpression Operator="&amp;" Text="sensor_failure == NoFailure &amp; upp2_function != Upp2Failed">
+<BinaryExpression Operator="==">
 <SimpleIdentifier Name="sensor_failure"/>
 <SimpleIdentifier Name="NoFailure"/>
+</BinaryExpression>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Failed"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -529,9 +574,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="!=" Text="sensor_failure != NoFailure">
+<BinaryExpression Operator="|" Text="sensor_failure != NoFailure | upp2_function == Upp2Failed">
+<BinaryExpression Operator="!=">
 <SimpleIdentifier Name="sensor_failure"/>
 <SimpleIdentifier Name="NoFailure"/>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Failed"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -965,9 +1016,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="==" Text="sensor_failure == NoFailure">
+<BinaryExpression Operator="&amp;" Text="sensor_failure == NoFailure &amp; upp2_function != Upp2Failed">
+<BinaryExpression Operator="==">
 <SimpleIdentifier Name="sensor_failure"/>
 <SimpleIdentifier Name="NoFailure"/>
+</BinaryExpression>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Failed"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -984,9 +1041,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="!=" Text="sensor_failure != NoFailure">
+<BinaryExpression Operator="|" Text="sensor_failure != NoFailure | upp2_function == Upp2Failed">
+<BinaryExpression Operator="!=">
 <SimpleIdentifier Name="sensor_failure"/>
 <SimpleIdentifier Name="NoFailure"/>
+</BinaryExpression>
+<BinaryExpression Operator="==">
+<SimpleIdentifier Name="upp2_function"/>
+<SimpleIdentifier Name="Upp2Failed"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -1076,9 +1139,15 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="==" Text="active_path == sstp">
+<BinaryExpression Operator="&amp;" Text="active_path == sstp &amp; sstp_function != SstpUnavailable">
+<BinaryExpression Operator="==">
 <SimpleIdentifier Name="active_path"/>
 <SimpleIdentifier Name="sstp"/>
+</BinaryExpression>
+<BinaryExpression Operator="!=">
+<SimpleIdentifier Name="sstp_function"/>
+<SimpleIdentifier Name="SstpUnavailable"/>
+</BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
