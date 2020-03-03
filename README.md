@@ -21,14 +21,14 @@ Available to the tactical planners to complete the transport mission safely are 
 
 ## Models
 
-The synthesis is performed for a simplified scenario where Tp1 and Tp2 are not considered. The name UPP2, which would be both the path connecting Tp2 with the goal and the software component responsible for the generation of that path, is here used as it would be the path from the initial spot in A to the goal spot in B.
+The synthesis is performed for a simplified scenario where Tp1 and Tp2 are not considered. The second unstructured path (UP2) which would be the path connecting Tp2 with the goal is here used as it would be the path from the initial spot in A to the goal spot in B.
 
 The [supremica](supremica/) folder and the [tulip](tulip/) folder contain Supremica and TuLiP models. The files named supervisor_synthesis produce tactical planners where the localization, UPP2, SSTP, and AEB work according to the above description.
 
 The models with the prefix simple_ implement simplified requirements and environments compared to the supervisor_synthesis models. These simplified models produce tactical planners that are easier to inspect.
-- simple_upp2 only captures the successful interaction between the tactical planner and the UPP2. A correct tactical planner must only guarantee that the goal is reached.
-- simple_sstp adds the localization subsystem and the SSTP. Hence, the sensor can fail, and in that case the tactical planner must activate SSTP.
-- simple_aeb adds the possibility to activate AEB, and also that SSTP can be unavailable. If the sensor fails and SSTP is unavailable, the tactical planner must activate AEB.
+- simple_up2 only captures the successful interaction between the tactical planner and the UPP2. A correct tactical planner must only guarantee that the goal is reached.
+- simple_sst adds the localization subsystem and the SSTP. Hence, the sensor can fail, and in that case the tactical planner must activate a safe stop trajectory (SST).
+- simple_aeb adds the possibility to activate AEB, and also that SSTs can be unavailable. If the sensor fails and SSTs are unavailable, the tactical planner must activate AEB.
 
 The files in the supremica folder are opened through the Supremica IDE, which provides access to synthesis algorithms.
 
