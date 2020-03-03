@@ -7,18 +7,18 @@
 <EventDecl Kind="UNCONTROLLABLE" Name="stopping"/>
 <EventDecl Kind="CONTROLLABLE" Name="upp_2_request"/>
 <EventDecl Kind="CONTROLLABLE" Name="activate_path_none"/>
-<EventDecl Kind="CONTROLLABLE" Name="activate_path_upp2"/>
+<EventDecl Kind="CONTROLLABLE" Name="activate_path_up2"/>
 <EventDecl Kind="PROPOSITION" Name=":accepting"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="sensor_failed"/>
-<EventDecl Kind="CONTROLLABLE" Name="activate_path_sstp"/>
+<EventDecl Kind="CONTROLLABLE" Name="activate_path_sst"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="safe_stopping"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="emergency_stopping"/>
-<EventDecl Kind="UNCONTROLLABLE" Name="sstp_available"/>
-<EventDecl Kind="UNCONTROLLABLE" Name="sstp_unavailable"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="sst_available"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="sst_unavailable"/>
 <EventDecl Kind="CONTROLLABLE" Name="activate_path_aeb"/>
 </EventDeclList>
 <ComponentList>
-<SimpleComponent Kind="PLANT" Name="upp2_function">
+<SimpleComponent Kind="PLANT" Name="upp2">
 <Graph>
 <NodeList>
 <SimpleNode Initial="true" Name="NoRequest">
@@ -40,7 +40,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="Upp2Available">
+<SimpleNode Name="Up2Available">
 <EventList>
 <SimpleIdentifier Name=":accepting"/>
 </EventList>
@@ -61,7 +61,7 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="Responding" Target="Upp2Available">
+<Edge Source="Responding" Target="Up2Available">
 <LabelBlock>
 <SimpleIdentifier Name="upp_2_success"/>
 <LabelGeometry Anchor="NW">
@@ -73,14 +73,14 @@
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_sstp"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_sst"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <SimpleIdentifier Name="emergency_stopping"/>
 <SimpleIdentifier Name="goal_reached"/>
 <SimpleIdentifier Name="safe_stopping"/>
 <SimpleIdentifier Name="sensor_failed"/>
-<SimpleIdentifier Name="sstp_available"/>
-<SimpleIdentifier Name="sstp_unavailable"/>
+<SimpleIdentifier Name="sst_available"/>
+<SimpleIdentifier Name="sst_unavailable"/>
 <SimpleIdentifier Name="starting"/>
 <SimpleIdentifier Name="stopping"/>
 <LabelGeometry Anchor="NW">
@@ -91,18 +91,18 @@
 <Point X="109" Y="308"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="Upp2Available" Target="Upp2Available">
+<Edge Source="Up2Available" Target="Up2Available">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_sstp"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_sst"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <SimpleIdentifier Name="emergency_stopping"/>
 <SimpleIdentifier Name="goal_reached"/>
 <SimpleIdentifier Name="safe_stopping"/>
 <SimpleIdentifier Name="sensor_failed"/>
-<SimpleIdentifier Name="sstp_available"/>
-<SimpleIdentifier Name="sstp_unavailable"/>
+<SimpleIdentifier Name="sst_available"/>
+<SimpleIdentifier Name="sst_unavailable"/>
 <SimpleIdentifier Name="starting"/>
 <SimpleIdentifier Name="stopping"/>
 <LabelGeometry Anchor="NW">
@@ -113,10 +113,10 @@
 </EdgeList>
 </Graph>
 </SimpleComponent>
-<SimpleComponent Kind="PLANT" Name="sstp_function">
+<SimpleComponent Kind="PLANT" Name="sstp">
 <Graph>
 <NodeList>
-<SimpleNode Initial="true" Name="SstpAvailable">
+<SimpleNode Initial="true" Name="SstAvailable">
 <PointGeometry>
 <Point X="240" Y="288"/>
 </PointGeometry>
@@ -124,7 +124,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="SstpUnavailable">
+<SimpleNode Name="SstUnavailable">
 <PointGeometry>
 <Point X="432" Y="288"/>
 </PointGeometry>
@@ -132,7 +132,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="SstpActive">
+<SimpleNode Name="SstActive">
 <PointGeometry>
 <Point X="240" Y="448"/>
 </PointGeometry>
@@ -142,9 +142,9 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="SstpAvailable" Target="SstpUnavailable">
+<Edge Source="SstAvailable" Target="SstUnavailable">
 <LabelBlock>
-<SimpleIdentifier Name="sstp_unavailable"/>
+<SimpleIdentifier Name="sst_unavailable"/>
 <LabelGeometry Anchor="NW">
 <Point X="-31" Y="-30"/>
 </LabelGeometry>
@@ -153,27 +153,27 @@
 <Point X="336" Y="272"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="SstpUnavailable" Target="SstpAvailable">
+<Edge Source="SstUnavailable" Target="SstAvailable">
 <LabelBlock>
-<SimpleIdentifier Name="sstp_available"/>
+<SimpleIdentifier Name="sst_available"/>
 </LabelBlock>
 <SplineGeometry>
 <Point X="336" Y="304"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="SstpAvailable" Target="SstpActive">
+<Edge Source="SstAvailable" Target="SstActive">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 </LabelBlock>
 <SplineGeometry>
 <Point X="256" Y="368"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="SstpActive" Target="SstpAvailable">
+<Edge Source="SstActive" Target="SstAvailable">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-120" Y="-23"/>
 </LabelGeometry>
@@ -182,21 +182,21 @@
 <Point X="224" Y="368"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="SstpAvailable" Target="SstpAvailable">
+<Edge Source="SstAvailable" Target="SstAvailable">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-109" Y="-73"/>
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="SstpUnavailable" Target="SstpUnavailable">
+<Edge Source="SstUnavailable" Target="SstUnavailable">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="2" Y="-69"/>
 </LabelGeometry>
@@ -231,17 +231,17 @@
 <EdgeList>
 <Edge Source="GoodRequestPath" Target="BadRequestPath">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-46" Y="9"/>
 </LabelGeometry>
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="|" Text="upp2_function != Upp2Available | sensor_failure == Failure">
+<BinaryExpression Operator="|" Text="upp2 != Up2Available | sensor_failure == Failure">
 <BinaryExpression Operator="!=">
-<SimpleIdentifier Name="upp2_function"/>
-<SimpleIdentifier Name="Upp2Available"/>
+<SimpleIdentifier Name="upp2"/>
+<SimpleIdentifier Name="Up2Available"/>
 </BinaryExpression>
 <BinaryExpression Operator="==">
 <SimpleIdentifier Name="sensor_failure"/>
@@ -256,17 +256,17 @@
 </Edge>
 <Edge Source="GoodRequestPath" Target="GoodRequestPath">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-37" Y="-34"/>
 </LabelGeometry>
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="&amp;" Text="upp2_function == Upp2Available &amp; sensor_failure == NoFailure">
+<BinaryExpression Operator="&amp;" Text="upp2 == Up2Available &amp; sensor_failure == NoFailure">
 <BinaryExpression Operator="==">
-<SimpleIdentifier Name="upp2_function"/>
-<SimpleIdentifier Name="Upp2Available"/>
+<SimpleIdentifier Name="upp2"/>
+<SimpleIdentifier Name="Up2Available"/>
 </BinaryExpression>
 <BinaryExpression Operator="==">
 <SimpleIdentifier Name="sensor_failure"/>
@@ -415,8 +415,8 @@
 <Edge Source="KeepPath" Target="KeepPath">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_up2"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 <SimpleIdentifier Name="activate_path_none"/>
 <LabelGeometry Anchor="NW">
 <Point X="-41" Y="-83"/>
@@ -542,10 +542,10 @@
 </EdgeList>
 </Graph>
 </SimpleComponent>
-<SimpleComponent Kind="SPEC" Name="interrupt_sstp">
+<SimpleComponent Kind="SPEC" Name="interrupt_sst">
 <Graph>
 <NodeList>
-<SimpleNode Initial="true" Name="InterruptSstpOk">
+<SimpleNode Initial="true" Name="InterruptSstOk">
 <EventList>
 <SimpleIdentifier Name=":accepting"/>
 </EventList>
@@ -556,7 +556,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="InterruptSstpNok">
+<SimpleNode Name="InterruptSstNok">
 <PointGeometry>
 <Point X="336" Y="256"/>
 </PointGeometry>
@@ -566,9 +566,9 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="InterruptSstpOk" Target="InterruptSstpNok">
+<Edge Source="InterruptSstOk" Target="InterruptSstNok">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 <LabelGeometry Anchor="NW">
 <Point X="-34" Y="-31"/>
 </LabelGeometry>
@@ -577,10 +577,10 @@
 <Point X="264" Y="240"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="InterruptSstpOk" Target="InterruptSstpOk">
+<Edge Source="InterruptSstOk" Target="InterruptSstOk">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <SimpleIdentifier Name="safe_stopping"/>
 <LabelGeometry Anchor="NW">
 <Point X="-71" Y="-71"/>
@@ -590,7 +590,7 @@
 <Point X="210" Y="200"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="InterruptSstpNok" Target="InterruptSstpOk">
+<Edge Source="InterruptSstNok" Target="InterruptSstOk">
 <LabelBlock>
 <SimpleIdentifier Name="safe_stopping"/>
 <LabelGeometry Anchor="NW">
@@ -716,7 +716,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="upp2">
+<SimpleNode Name="up2">
 <PointGeometry>
 <Point X="288" Y="224"/>
 </PointGeometry>
@@ -724,7 +724,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="sstp">
+<SimpleNode Name="sst">
 <PointGeometry>
 <Point X="208" Y="336"/>
 </PointGeometry>
@@ -742,9 +742,9 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="none" Target="upp2">
+<Edge Source="none" Target="up2">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-56" Y="-28"/>
 </LabelGeometry>
@@ -753,7 +753,7 @@
 <Point X="208" Y="208"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="upp2" Target="none">
+<Edge Source="up2" Target="none">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
 <LabelGeometry Anchor="NW">
@@ -764,17 +764,17 @@
 <Point X="208" Y="240"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="upp2" Target="sstp">
+<Edge Source="up2" Target="sst">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 </LabelBlock>
 <SplineGeometry>
 <Point X="255" Y="281"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="sstp" Target="upp2">
+<Edge Source="sst" Target="up2">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-96" Y="-9"/>
 </LabelGeometry>
@@ -783,7 +783,7 @@
 <Point X="241" Y="275"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="sstp" Target="none">
+<Edge Source="sst" Target="none">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
 <LabelGeometry Anchor="NW">
@@ -794,9 +794,9 @@
 <Point X="158" Y="287"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="none" Target="sstp">
+<Edge Source="none" Target="sst">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 <LabelGeometry Anchor="NW">
 <Point X="-34" Y="-25"/>
 </LabelGeometry>
@@ -805,7 +805,7 @@
 <Point X="178" Y="273"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="sstp" Target="aeb">
+<Edge Source="sst" Target="aeb">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <LabelGeometry Anchor="NW">
@@ -816,23 +816,23 @@
 <Point X="304" Y="320"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="aeb" Target="sstp">
+<Edge Source="aeb" Target="sst">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_sstp"/>
+<SimpleIdentifier Name="activate_path_sst"/>
 </LabelBlock>
 <SplineGeometry>
 <Point X="304" Y="352"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="aeb" Target="upp2">
+<Edge Source="aeb" Target="up2">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 </LabelBlock>
 <SplineGeometry>
 <Point X="333" Y="291"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="upp2" Target="aeb">
+<Edge Source="up2" Target="aeb">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_aeb"/>
 <LabelGeometry Anchor="NW">
@@ -1027,14 +1027,14 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="&amp;" Text="state == Driving &amp; active_path == upp2">
+<BinaryExpression Operator="&amp;" Text="state == Driving &amp; active_path == up2">
 <BinaryExpression Operator="==">
 <SimpleIdentifier Name="state"/>
 <SimpleIdentifier Name="Driving"/>
 </BinaryExpression>
 <BinaryExpression Operator="==">
 <SimpleIdentifier Name="active_path"/>
-<SimpleIdentifier Name="upp2"/>
+<SimpleIdentifier Name="up2"/>
 </BinaryExpression>
 </BinaryExpression>
 </Guards>
@@ -1076,19 +1076,19 @@
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="&amp;" Text="active_path == sstp &amp; sstp_function != SstpUnavailable">
+<BinaryExpression Operator="&amp;" Text="active_path == sst &amp; sstp != SstUnavailable">
 <BinaryExpression Operator="==">
 <SimpleIdentifier Name="active_path"/>
-<SimpleIdentifier Name="sstp"/>
+<SimpleIdentifier Name="sst"/>
 </BinaryExpression>
 <BinaryExpression Operator="!=">
-<SimpleIdentifier Name="sstp_function"/>
-<SimpleIdentifier Name="SstpUnavailable"/>
+<SimpleIdentifier Name="sstp"/>
+<SimpleIdentifier Name="SstUnavailable"/>
 </BinaryExpression>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
-<Point X="-88" Y="-45"/>
+<Point X="-89" Y="-44"/>
 </LabelGeometry>
 </GuardActionBlock>
 </Edge>

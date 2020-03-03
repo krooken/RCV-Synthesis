@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Module xmlns="http://waters.sourceforge.net/xsd/module" xmlns:B="http://waters.sourceforge.net/xsd/base" Name="simple_upp2">
+<Module xmlns="http://waters.sourceforge.net/xsd/module" xmlns:B="http://waters.sourceforge.net/xsd/base" Name="simple_up2">
 <EventDeclList>
 <EventDecl Kind="UNCONTROLLABLE" Name="goal_reached"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="upp_2_success"/>
@@ -7,11 +7,11 @@
 <EventDecl Kind="UNCONTROLLABLE" Name="stopping"/>
 <EventDecl Kind="CONTROLLABLE" Name="upp_2_request"/>
 <EventDecl Kind="CONTROLLABLE" Name="activate_path_none"/>
-<EventDecl Kind="CONTROLLABLE" Name="activate_path_upp2"/>
+<EventDecl Kind="CONTROLLABLE" Name="activate_path_up2"/>
 <EventDecl Kind="PROPOSITION" Name=":accepting"/>
 </EventDeclList>
 <ComponentList>
-<SimpleComponent Kind="PLANT" Name="upp2_function">
+<SimpleComponent Kind="PLANT" Name="upp2">
 <Graph>
 <NodeList>
 <SimpleNode Initial="true" Name="NoRequest">
@@ -30,7 +30,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="Upp2Available">
+<SimpleNode Name="Up2Available">
 <EventList>
 <SimpleIdentifier Name=":accepting"/>
 </EventList>
@@ -51,7 +51,7 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="Responding" Target="Upp2Available">
+<Edge Source="Responding" Target="Up2Available">
 <LabelBlock>
 <SimpleIdentifier Name="upp_2_success"/>
 <LabelGeometry Anchor="NW">
@@ -88,16 +88,16 @@
 <EdgeList>
 <Edge Source="GoodRequestPath" Target="BadRequestPath">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-46" Y="9"/>
 </LabelGeometry>
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="!=" Text="upp2_function != Upp2Available">
-<SimpleIdentifier Name="upp2_function"/>
-<SimpleIdentifier Name="Upp2Available"/>
+<BinaryExpression Operator="!=" Text="upp2 != Up2Available">
+<SimpleIdentifier Name="upp2"/>
+<SimpleIdentifier Name="Up2Available"/>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -107,16 +107,16 @@
 </Edge>
 <Edge Source="GoodRequestPath" Target="GoodRequestPath">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-37" Y="-34"/>
 </LabelGeometry>
 </LabelBlock>
 <GuardActionBlock>
 <Guards>
-<BinaryExpression Operator="==" Text="upp2_function == Upp2Available">
-<SimpleIdentifier Name="upp2_function"/>
-<SimpleIdentifier Name="Upp2Available"/>
+<BinaryExpression Operator="==" Text="upp2 == Up2Available">
+<SimpleIdentifier Name="upp2"/>
+<SimpleIdentifier Name="Up2Available"/>
 </BinaryExpression>
 </Guards>
 <LabelGeometry Anchor="NW">
@@ -195,7 +195,7 @@
 <Edge Source="GoodKeepPath" Target="GoodKeepPath">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-55" Y="-47"/>
 </LabelGeometry>
@@ -206,7 +206,7 @@
 </Edge>
 <Edge Source="BadKeepPath" Target="BadKeepPath">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-42" Y="-34"/>
 </LabelGeometry>
@@ -321,7 +321,7 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="upp2">
+<SimpleNode Name="up2">
 <PointGeometry>
 <Point X="288" Y="224"/>
 </PointGeometry>
@@ -331,9 +331,9 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="none" Target="upp2">
+<Edge Source="none" Target="up2">
 <LabelBlock>
-<SimpleIdentifier Name="activate_path_upp2"/>
+<SimpleIdentifier Name="activate_path_up2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-28" Y="-29"/>
 </LabelGeometry>
@@ -342,7 +342,7 @@
 <Point X="208" Y="208"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="upp2" Target="none">
+<Edge Source="up2" Target="none">
 <LabelBlock>
 <SimpleIdentifier Name="activate_path_none"/>
 <LabelGeometry Anchor="NW">
